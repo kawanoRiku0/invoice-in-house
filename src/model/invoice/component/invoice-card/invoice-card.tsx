@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { Invoice } from '../../type';
 import { FC, useMemo } from 'react';
+import { Icon } from '@iconify/react';
 
 type Props = {
   invoice: Invoice;
@@ -27,15 +28,24 @@ export const InvoiceCard: FC<Props> = ({
   );
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Flex>
-        {paymentUrl && <CheckIcon size={24} color="green" />}
-        <Title order={2} mb="md">
-          {title}
-        </Title>
+      <Flex align="center">
+        {paymentUrl ? (
+          <Icon
+            width={24}
+            height={24}
+            icon="mdi:check-circle-outline"
+            color="green"
+          />
+        ) : (
+          <Icon width={24} height={24} icon="mdi:circle-outline" />
+        )}
+        <Text component="p" size="xl" fw="normal">
+          請求書名: <strong>{title}</strong>
+        </Text>
       </Flex>
       <Stack>
         <Text component="p" size="lg" fw={500}>
-          合計 {totalPrice}円
+          合計 <strong>{totalPrice.toLocaleString()}円</strong>
         </Text>
         {paymentUrl && (
           <Text component="h3">
