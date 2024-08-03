@@ -18,6 +18,7 @@ import {
   Button,
   NumberInput,
   Center,
+  Box,
 } from '@mantine/core';
 import { Invoice, InvoiceItem } from '../../../type';
 import { FC, useMemo, useState } from 'react';
@@ -38,7 +39,7 @@ const generateRandomString = (charCount = 7): string => {
     : str;
 };
 
-export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
+export const Form: FC<Props> = ({ invoice, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -47,8 +48,9 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
     setValue,
   } = useForm<InvoiceForm>({
     defaultValues: {
-      ...invoice,
+      items: [],
       createdAt: invoice?.createdAt ?? new Date().toLocaleString(),
+      ...invoice,
     },
   });
 
@@ -73,28 +75,22 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Flex align="center">
-          {payment ? (
-            <Icon
-              width={24}
-              height={24}
-              icon="mdi:check-circle-outline"
-              color="green"
-            />
-          ) : (
+        <Box>
+          <Flex align="center">
             <Icon width={24} height={24} icon="mdi:circle-outline" />
-          )}
-          <Flex gap="sm" align="center">
-            <InputLabel size="xl" htmlFor="title">
-              請求書名:
-            </InputLabel>
-            <Input
-              id="title"
-              {...register('title', { required: '請求書名は必須です' })}
-            />
-            {errors.title && <Text c="red">{errors.title.message}</Text>}
+            <Flex gap="sm" align="center">
+              <InputLabel size="xl" htmlFor="title">
+                請求書名:
+              </InputLabel>
+              <Input
+                id="title"
+                {...register('title', { required: '請求書名は必須です' })}
+              />
+            </Flex>
           </Flex>
-        </Flex>
+          {errors.title && <Text c="red">{errors.title.message}</Text>}
+        </Box>
+
         <Stack>
           <Text component="p" size="lg" fw={500}>
             合計 <strong>{totalPrice.toLocaleString()}円</strong>
@@ -192,48 +188,55 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
             </Accordion.Item>
           </Accordion>
           <Stack>
-            <Flex gap="sm" align="center">
-              <InputLabel size="sm" c="dimmed" w="50px" htmlFor="from">
-                from:
-              </InputLabel>
-              <Select
-                id="from"
-                {...register('from', { required: '送付元は必須です' })}
-                value={from}
-                onChange={(value) => {
-                  setValue('from', value ?? '');
-                }}
-                searchable
-                data={[
-                  { value: '1', label: 'わいお' },
-                  { value: '2', label: 'よめこ' },
-                ]}
-              />
+            <Box>
+              <Flex gap="sm" align="center">
+                <InputLabel size="sm" c="dimmed" w="50px" htmlFor="from">
+                  from:
+                </InputLabel>
+                <Select
+                  id="from"
+                  {...register('from', { required: '送付元は必須です' })}
+                  value={from}
+                  onChange={(value) => {
+                    setValue('from', value ?? '');
+                  }}
+                  searchable
+                  data={[
+                    { value: '1', label: 'わいお' },
+                    { value: '2', label: 'よめこ' },
+                  ]}
+                />
+              </Flex>
               {errors.from && <Text c="red">{errors.from.message}</Text>}
-            </Flex>
-            <Flex gap="sm" align="center">
-              <InputLabel size="sm" c="dimmed" w="50px" htmlFor="to">
-                to:
-              </InputLabel>
-              <Select
-                id="to"
-                {...register('to', { required: '宛先は必須です' })}
-                value={to}
-                onChange={(value) => {
-                  setValue('to', value ?? '');
-                }}
-                searchable
-                data={[
-                  { value: '1', label: 'わいお' },
-                  { value: '2', label: 'よめこ' },
-                ]}
-              />
+            </Box>
+            <Box>
+              <Flex gap="sm" align="center">
+                <InputLabel size="sm" c="dimmed" w="50px" htmlFor="to">
+                  to:
+                </InputLabel>
+                <Select
+                  id="to"
+                  {...register('to', { required: '宛先は必須です' })}
+                  value={to}
+                  onChange={(value) => {
+                    setValue('to', value ?? '');
+                  }}
+                  searchable
+                  data={[
+                    { value: '1', label: 'わいお' },
+                    { value: '2', label: 'よめこ' },
+                  ]}
+                />
+              </Flex>
               {errors.to && <Text c="red">{errors.to.message}</Text>}
-            </Flex>
+            </Box>
+
+            <Box>
+              <Text component="p" size="sm" c="dimmed">
+                createdAt: {createdAt}
+              </Text>
+            </Box>
           </Stack>
-          <Text component="p" size="sm" c="dimmed">
-            createdAt: {createdAt}
-          </Text>
           <Button type="submit">送信</Button>
         </Stack>
       </form>

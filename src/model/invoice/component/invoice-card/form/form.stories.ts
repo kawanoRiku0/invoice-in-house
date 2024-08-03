@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { InvoiceCard } from './form';
+import { InvoiceCardForm } from '.';
 
-const meta: Meta<typeof InvoiceCard> = {
+const meta: Meta<typeof InvoiceCardForm> = {
   title: 'invoiceCardForm',
-  component: InvoiceCard,
+  component: InvoiceCardForm,
 };
 
 export default meta;
