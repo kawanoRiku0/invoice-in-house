@@ -100,9 +100,15 @@ export default function Page() {
           onChange={(value) => setActiveTab(value as 'all' | 'mine' | 'others')}
         >
           <Tabs.List>
-            <Tabs.Tab value="all">全て</Tabs.Tab>
-            <Tabs.Tab value="mine">自分が作成</Tabs.Tab>
-            <Tabs.Tab value="others">自分以外が作成</Tabs.Tab>
+            <Tabs.Tab value="all">
+              <span tabIndex={0}>全て</span>
+            </Tabs.Tab>
+            <Tabs.Tab value="mine">
+              <span tabIndex={0}>自分が作成</span>
+            </Tabs.Tab>
+            <Tabs.Tab value="others">
+              <span tabIndex={0}>自分以外が作成</span>
+            </Tabs.Tab>
           </Tabs.List>
         </Tabs>
         <Group>

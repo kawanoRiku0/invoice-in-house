@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Avatar, ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {
+  Avatar,
+  ColorSchemeScript,
+  MantineProvider,
+  Text,
+} from '@mantine/core';
 import './global.css';
 import '@mantine/core/styles.css';
 
@@ -24,8 +29,6 @@ export default function RootLayout({
       <body
         className={inter.className}
         style={{
-          margin: '0 auto',
-          padding: '0 20px',
           width: '100%',
         }}
       >
@@ -34,16 +37,19 @@ export default function RootLayout({
             style={{
               backgroundColor: '#228BE6',
               width: '100%',
-              height: '40px',
-              padding: '0 20px',
+              height: '60px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-between',
+              padding: '0 20px',
             }}
           >
+            <Text component="p" fw="bold" size="xl" c="white">
+              請求書インマイハウス
+            </Text>
             <Avatar alt="it's me" color="white" />
           </header>
-          {children}
+          <div style={{ padding: '0 20px' }}>{children}</div>
         </MantineProvider>
       </body>
     </html>
