@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { Avatar, ColorSchemeScript, MantineProvider } from '@mantine/core';
 import './global.css';
 import '@mantine/core/styles.css';
 
@@ -25,12 +25,27 @@ export default function RootLayout({
         className={inter.className}
         style={{
           margin: '0 auto',
-          padding: '20px',
+          padding: '0 20px',
           width: '100%',
           maxWidth: '1200px',
         }}
       >
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider>
+          <header
+            style={{
+              backgroundColor: '#228BE6',
+              width: '100%',
+              height: '40px',
+              padding: '0 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Avatar alt="it's me" color="white" />
+          </header>
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );
