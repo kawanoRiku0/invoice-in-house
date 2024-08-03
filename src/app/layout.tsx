@@ -27,7 +27,6 @@ export default function RootLayout({
           margin: '0 auto',
           padding: '0 20px',
           width: '100%',
-          maxWidth: '1200px',
         }}
       >
         <MantineProvider>
