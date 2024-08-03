@@ -82,8 +82,13 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
             <Icon width={24} height={24} icon="mdi:circle-outline" />
           )}
           <Flex gap="sm" align="center">
-            <InputLabel size="xl">請求書名: </InputLabel>
-            <Input {...register('title', { required: '請求書名は必須です' })} />
+            <InputLabel size="xl" htmlFor="title">
+              請求書名:
+            </InputLabel>
+            <Input
+              id="title"
+              {...register('title', { required: '請求書名は必須です' })}
+            />
             {errors.title && <Text c="red">{errors.title.message}</Text>}
           </Flex>
         </Flex>
@@ -185,10 +190,11 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
           </Accordion>
           <Stack>
             <Flex gap="sm" align="center">
-              <InputLabel size="sm" c="dimmed" w="50px">
+              <InputLabel size="sm" c="dimmed" w="50px" htmlFor="from">
                 from:
               </InputLabel>
               <Select
+                id="from"
                 {...register('from', { required: '送付元は必須です' })}
                 value={from}
                 onChange={(value) => {
@@ -203,10 +209,11 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
               {errors.from && <Text c="red">{errors.from.message}</Text>}
             </Flex>
             <Flex gap="sm" align="center">
-              <InputLabel size="sm" c="dimmed" w="50px">
+              <InputLabel size="sm" c="dimmed" w="50px" htmlFor="to">
                 to:
               </InputLabel>
               <Select
+                id="to"
                 {...register('to', { required: '宛先は必須です' })}
                 value={to}
                 onChange={(value) => {
