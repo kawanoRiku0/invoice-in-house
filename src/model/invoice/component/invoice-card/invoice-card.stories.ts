@@ -20,6 +20,7 @@ export const Default: Story = {
       ],
       from: 'かわのりく',
       to: 'きたいけめい',
+      createdAt: new Date().toLocaleString(),
     },
   },
 };

@@ -20,6 +20,7 @@ export const Default: Story = {
       ],
       from: 'かわのりく',
       to: 'きたいけめい',
+      createdAt: new Date().toLocaleString(),
     },
     onSubmit: (invoice) => {
       alert(JSON.stringify(invoice, null, 2));

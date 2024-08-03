@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const InvoiceCard: FC<Props> = ({
-  invoice: { title, items, paymentUrl, from, to },
+  invoice: { title, items, payment, from, to, createdAt },
 }) => {
   const totalPrice = useMemo(
     () => items.reduce((acc, item) => acc + item.price, 0),
@@ -29,7 +29,7 @@ export const InvoiceCard: FC<Props> = ({
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Flex align="center">
-        {paymentUrl ? (
+        {payment ? (
           <Icon
             width={24}
             height={24}
@@ -47,9 +47,9 @@ export const InvoiceCard: FC<Props> = ({
         <Text component="p" size="lg" fw={500}>
           合計 <strong>{totalPrice.toLocaleString()}円</strong>
         </Text>
-        {paymentUrl && (
+        {payment && (
           <Text component="h3">
-            支払いURL: <a href={paymentUrl}>{paymentUrl}</a>
+            支払いURL: <a href={payment.url}>{payment.url}</a>
           </Text>
         )}
         <Accordion chevronPosition="left">
@@ -85,6 +85,9 @@ export const InvoiceCard: FC<Props> = ({
           </Text>
           <Text component="p" size="sm" c="dimmed">
             to: {to}
+          </Text>
+          <Text component="p" size="sm" c="dimmed">
+            createdAt: {createdAt}
           </Text>
         </div>
       </Stack>

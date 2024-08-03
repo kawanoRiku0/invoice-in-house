@@ -46,10 +46,13 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
     watch,
     setValue,
   } = useForm<InvoiceForm>({
-    defaultValues: invoice,
+    defaultValues: {
+      ...invoice,
+      createdAt: invoice?.createdAt ?? new Date().toLocaleString(),
+    },
   });
 
-  const { id, title, items, paymentUrl, from, to } = watch();
+  const { id, title, items, payment, from, to, createdAt } = watch();
 
   const totalPrice = useMemo(
     () => items.reduce((acc, item) => acc + item.price, 0) || 0,
@@ -71,7 +74,7 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex align="center">
-          {paymentUrl ? (
+          {payment ? (
             <Icon
               width={24}
               height={24}
@@ -96,9 +99,9 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
           <Text component="p" size="lg" fw={500}>
             合計 <strong>{totalPrice.toLocaleString()}円</strong>
           </Text>
-          {invoice?.paymentUrl && (
+          {payment && (
             <Text component="h3">
-              支払いURL: <a href={paymentUrl}>{paymentUrl}</a>
+              支払いURL: <a href={payment.url}>{payment.url}</a>
             </Text>
           )}
           <Accordion chevronPosition="left">
@@ -228,6 +231,9 @@ export const InvoiceCard: FC<Props> = ({ invoice, onSubmit }) => {
               {errors.to && <Text c="red">{errors.to.message}</Text>}
             </Flex>
           </Stack>
+          <Text component="p" size="sm" c="dimmed">
+            createdAt: {createdAt}
+          </Text>
           <Button type="submit">送信</Button>
         </Stack>
       </form>

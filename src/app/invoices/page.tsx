@@ -16,6 +16,7 @@ export default function Page() {
       ],
       from: 'かわのりく',
       to: 'きたいけめい',
+      createdAt: new Date().toLocaleString(),
     },
     {
       id: '2',
@@ -26,7 +27,12 @@ export default function Page() {
       ],
       from: 'かわのりく',
       to: 'きたいけめい',
-      paymentUrl: 'https://example.com',
+      createdAt: new Date().toLocaleString(),
+      payment: {
+        invoiceId: '2',
+        url: 'https://example.com',
+        createdAt: new Date().toLocaleString(),
+      },
     },
     {
       id: '3',
@@ -37,6 +43,7 @@ export default function Page() {
       ],
       from: 'きたいけめい',
       to: 'かわのりく',
+      createdAt: new Date().toLocaleString(),
     },
     {
       id: '4',
@@ -47,7 +54,12 @@ export default function Page() {
       ],
       from: 'きたいけめい',
       to: 'かわのりく',
-      paymentUrl: 'https://example.com',
+      createdAt: new Date().toLocaleString(),
+      payment: {
+        invoiceId: '4',
+        url: 'https://example.com',
+        createdAt: new Date().toLocaleString(),
+      },
     },
   ] satisfies Invoice[];
 
@@ -67,8 +79,8 @@ export default function Page() {
         })
         .filter((invoice) => {
           return (
-            (statusPaid && invoice.paymentUrl) ||
-            (statusUnpaid && !invoice.paymentUrl) ||
+            (statusPaid && invoice.payment) ||
+            (statusUnpaid && !invoice.payment) ||
             (statusPaid && statusUnpaid)
           );
         }),
