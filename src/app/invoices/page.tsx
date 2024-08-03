@@ -1,8 +1,11 @@
 'use client';
 
 import { InvoiceCard } from '@/model/invoice/component/invoice-card';
+import { InvoiceCreateModal } from '@/model/invoice/component/invoice-create-modal';
 import { Invoice } from '@/model/invoice/type';
-import { Button, Group, Stack, Tabs } from '@mantine/core';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { Button, Group, Modal, Stack, Tabs } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { useMemo, useState } from 'react';
 
 export default function Page() {
@@ -87,6 +90,8 @@ export default function Page() {
     [activeTab, invoices, statusPaid, statusUnpaid]
   );
 
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <main style={{ padding: '20px 0' }}>
       <Stack>
@@ -122,6 +127,22 @@ export default function Page() {
           ))}
         </Stack>
       </Stack>
+      {/* モーダルなど基本通常時は表示されないもの */}
+      <Button
+        onClick={open}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 1000,
+        }}
+        radius="xl"
+        size="xl"
+        color="blue"
+      >
+        <Icon icon="mdi:plus" />
+      </Button>
+      <InvoiceCreateModal size="xl" opened={opened} onClose={close} />
     </main>
   );
 }
