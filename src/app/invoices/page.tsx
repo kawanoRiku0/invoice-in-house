@@ -2,9 +2,10 @@
 
 import { InvoiceCard } from '@/model/invoice/component/invoice-card';
 import { InvoiceCreateModal } from '@/model/invoice/component/invoice-create-modal';
+import { PaymentModal } from '@/model/invoice/component/payment-modal';
 import { Invoice } from '@/model/invoice/type';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Button, Group, Modal, Stack, Tabs } from '@mantine/core';
+import { Box, Button, Group, Modal, Stack, Tabs } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useMemo, useState } from 'react';
 
@@ -90,7 +91,14 @@ export default function Page() {
     [activeTab, invoices, statusPaid, statusUnpaid]
   );
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const [
+    createModalOpened,
+    { open: createModalOpen, close: createModalClose },
+  ] = useDisclosure(false);
+
+  const [invoiceForPayment, setInvoiceForPayment] = useState<Invoice | null>(
+    null
+  );
 
   return (
     <main style={{ padding: '20px 0' }}>
@@ -129,13 +137,24 @@ export default function Page() {
         </Group>
         <Stack>
           {filteredInvoices.map((invoice) => (
-            <InvoiceCard key={invoice.id} invoice={invoice} />
+            <Box key={invoice.id}>
+              <InvoiceCard
+                invoice={invoice}
+                footer={
+                  <Group justify="flex-end">
+                    <Button onClick={() => setInvoiceForPayment(invoice)}>
+                      支払う
+                    </Button>
+                  </Group>
+                }
+              />
+            </Box>
           ))}
         </Stack>
       </Stack>
       {/* モーダルなど基本通常時は表示されないもの */}
       <Button
-        onClick={open}
+        onClick={createModalOpen}
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -148,7 +167,22 @@ export default function Page() {
       >
         <Icon icon="mdi:plus" />
       </Button>
-      <InvoiceCreateModal size="xl" opened={opened} onClose={close} />
+      <InvoiceCreateModal
+        size="xl"
+        opened={createModalOpened}
+        onClose={createModalClose}
+      />
+      {invoiceForPayment && (
+        <PaymentModal
+          size="xl"
+          invoice={invoiceForPayment}
+          opened={Boolean(invoiceForPayment)}
+          onClose={() => setInvoiceForPayment(null)}
+          onSubmit={(url) => {
+            console.log(url);
+          }}
+        />
+      )}
     </main>
   );
 }

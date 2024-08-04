@@ -28,8 +28,11 @@ export const PaymentModal = ({ invoice, onClose, opened }: Props) => {
     <Modal
       opened={opened}
       onClose={onClose}
-      size="md"
-      title={<Title order={3}>「{invoice.to}」さんへの支払い</Title>}
+      title={
+        <Title size="lg" order={3}>
+          「{invoice.to}」さんへの支払い
+        </Title>
+      }
     >
       <Stack>
         <Table>
@@ -45,7 +48,7 @@ export const PaymentModal = ({ invoice, onClose, opened }: Props) => {
           </Table.Tbody>
         </Table>
         <Flex gap="sm" align="center">
-          <InputLabel htmlFor="url" size="md">
+          <InputLabel htmlFor="url" size="sm">
             PayPay URL
           </InputLabel>
           <Input

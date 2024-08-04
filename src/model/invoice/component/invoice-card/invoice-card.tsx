@@ -16,16 +16,17 @@ import {
   Menu,
 } from '@mantine/core';
 import { Invoice } from '../../type';
-import { FC, useMemo, useState } from 'react';
+import { FC, ReactNode, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { InvoiceCardForm } from './form';
 import { useDisclosure } from '@mantine/hooks';
 
 type Props = {
   invoice: Invoice;
+  footer?: ReactNode;
 };
 
-export const InvoiceCard: FC<Props> = ({ invoice }) => {
+export const InvoiceCard: FC<Props> = ({ invoice, footer }) => {
   const { title, items, payment, from, to, createdAt } = invoice;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -36,6 +37,7 @@ export const InvoiceCard: FC<Props> = ({ invoice }) => {
     () => items.reduce((acc, item) => acc + item.price, 0),
     [items]
   );
+
   return (
     <>
       {isEditing ? (
@@ -140,6 +142,7 @@ export const InvoiceCard: FC<Props> = ({ invoice }) => {
               </Text>
             </div>
           </Stack>
+          {footer}
         </Card>
       )}
     </>
