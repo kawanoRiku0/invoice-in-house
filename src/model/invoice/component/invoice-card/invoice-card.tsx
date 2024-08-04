@@ -44,55 +44,56 @@ export const InvoiceCard: FC<Props> = ({ invoice }) => {
           onSubmit={() => setIsEditing(false)}
         />
       ) : (
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Card shadow="sm" padding="lg" radius="sm" withBorder>
           <Group align="center" justify="space-between">
             <Group align="center">
-              {payment ? (
-                <Icon
-                  width={24}
-                  height={24}
-                  icon="mdi:check-circle-outline"
-                  color="green"
-                />
-              ) : (
-                <Icon width={24} height={24} icon="mdi:circle-outline" />
-              )}
-              <Text component="p" size="xl" fw="normal">
-                請求書名: <strong>{title}</strong>
+              <Icon
+                width={24}
+                height={24}
+                icon={
+                  payment ? 'mdi:check-circle-outline' : 'mdi:circle-outline'
+                }
+                color={payment ? 'green' : 'gray'}
+              />
+
+              <Text component="p" size="lg" fw="normal">
+                <strong>{title}</strong>
               </Text>
             </Group>
-            <Menu opened={isMenuOpen} onOpen={openMenu} onClose={closeMenu}>
-              <Menu.Target>
-                <Icon
-                  icon="mdi:dots-vertical"
-                  role="button"
-                  tabIndex={0}
-                  width={18}
-                  height={18}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      openMenu();
-                    }
-                  }}
-                />
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item onClick={() => setIsEditing(true)}>
-                  <Button size="xs" variant="transparent">
-                    編集
-                  </Button>
-                </Menu.Item>
-                <Menu.Item onClick={() => setIsEditing(true)}>
-                  <Button size="xs" variant="transparent">
-                    削除
-                  </Button>
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            {!payment && (
+              <Menu opened={isMenuOpen} onOpen={openMenu} onClose={closeMenu}>
+                <Menu.Target>
+                  <Icon
+                    icon="mdi:dots-vertical"
+                    role="button"
+                    tabIndex={0}
+                    width={18}
+                    height={18}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openMenu();
+                      }
+                    }}
+                  />
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item onClick={() => setIsEditing(true)}>
+                    <Button size="xs" variant="transparent">
+                      編集
+                    </Button>
+                  </Menu.Item>
+                  <Menu.Item onClick={() => setIsEditing(true)}>
+                    <Button size="xs" variant="transparent">
+                      削除
+                    </Button>
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            )}
           </Group>
           <Stack>
-            <Text component="p" size="lg" fw={500}>
+            <Text component="p" size="md" fw={500}>
               合計 <strong>{totalPrice.toLocaleString()}円</strong>
             </Text>
             {payment && (
@@ -103,7 +104,7 @@ export const InvoiceCard: FC<Props> = ({ invoice }) => {
             <Accordion chevronPosition="left">
               <Accordion.Item value="item">
                 <AccordionControl>
-                  <Text component="p" size="md">
+                  <Text component="p" size="sm">
                     項目一覧
                   </Text>
                 </AccordionControl>

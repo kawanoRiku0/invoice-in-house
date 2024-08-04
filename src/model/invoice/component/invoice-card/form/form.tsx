@@ -19,6 +19,7 @@ import {
   NumberInput,
   Center,
   Box,
+  Group,
 } from '@mantine/core';
 import { Invoice, InvoiceItem } from '../../../type';
 import { FC, useMemo, useState } from 'react';
@@ -73,26 +74,28 @@ export const Form: FC<Props> = ({ invoice, onSubmit }) => {
   };
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="sm" radius="sm" withBorder>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box>
-          <Flex align="center">
-            <Icon width={24} height={24} icon="mdi:circle-outline" />
-            <Flex gap="sm" align="center">
-              <InputLabel size="xl" htmlFor="title">
-                請求書名:
-              </InputLabel>
-              <Input
-                id="title"
-                {...register('title', { required: '請求書名は必須です' })}
-              />
-            </Flex>
-          </Flex>
-          {errors.title && <Text c="red">{errors.title.message}</Text>}
+          <Group gap="sm" align="center">
+            <InputLabel size="xs" htmlFor="title" c="dimmed">
+              請求書名
+            </InputLabel>
+            <Input
+              id="title"
+              style={{ flexGrow: 1 }}
+              {...register('title', { required: '請求書名は必須です' })}
+            />
+          </Group>
+          {errors.title && (
+            <Text c="red" size="xs">
+              {errors.title.message}
+            </Text>
+          )}
         </Box>
 
         <Stack>
-          <Text component="p" size="lg" fw={500}>
+          <Text component="p" size="sm" fw={500}>
             合計 <strong>{totalPrice.toLocaleString()}円</strong>
           </Text>
           {payment && (
@@ -103,7 +106,7 @@ export const Form: FC<Props> = ({ invoice, onSubmit }) => {
           <Accordion chevronPosition="left">
             <Accordion.Item value="item">
               <AccordionControl>
-                <Text component="p" size="md">
+                <Text component="p" size="sm">
                   項目一覧
                 </Text>
               </AccordionControl>
@@ -207,7 +210,11 @@ export const Form: FC<Props> = ({ invoice, onSubmit }) => {
                   ]}
                 />
               </Flex>
-              {errors.from && <Text c="red">{errors.from.message}</Text>}
+              {errors.from && (
+                <Text c="red" size="xs">
+                  {errors.from.message}
+                </Text>
+              )}
             </Box>
             <Box>
               <Flex gap="sm" align="center">
@@ -228,7 +235,11 @@ export const Form: FC<Props> = ({ invoice, onSubmit }) => {
                   ]}
                 />
               </Flex>
-              {errors.to && <Text c="red">{errors.to.message}</Text>}
+              {errors.to && (
+                <Text c="red" size="xs">
+                  {errors.to.message}
+                </Text>
+              )}
             </Box>
 
             <Box>
