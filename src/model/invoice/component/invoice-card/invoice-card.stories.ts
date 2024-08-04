@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { InvoiceCard } from './invoice-card';
 
 const meta: Meta<typeof InvoiceCard> = {
-  title: 'invoiceCard',
+  title: 'invoice/invoiceCard',
   component: InvoiceCard,
 };
 

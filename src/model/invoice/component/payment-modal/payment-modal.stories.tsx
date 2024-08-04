@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { PaymentModal } from './payment-modal';
 
 const meta: Meta<typeof PaymentModal> = {
-  title: 'paymentModal',
+  title: 'invoice/paymentModal',
   component: PaymentModal,
 };
 
